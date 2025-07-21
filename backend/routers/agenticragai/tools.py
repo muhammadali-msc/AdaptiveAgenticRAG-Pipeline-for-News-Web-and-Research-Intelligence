@@ -12,30 +12,54 @@ load_dotenv()
 
 logging.basicConfig(level=logging.INFO)
 
+
 def fetch_news(query: str, days: int = 7) -> List[Document]:
     """Fetch news articles from NewsAPI"""
-    url = f"https://newsapi.org/v2/everything?q={query}&language=en&sortBy=publishedAt&apiKey={config.NEWSAPI_KEY}&pageSize=2"
-    if days:
-        from datetime import datetime, timedelta
-        from_date = (datetime.now() - timedelta(days=days)).strftime('%Y-%m-%d')
-        url += f"&from={from_date}"
+    page_size=2
+    from datetime import datetime, timedelta
+
+    base_url = "https://newsapi.org/v2/everything"
+    from_date = (datetime.now() - timedelta(days=days)).strftime('%Y-%m-%d')
+
+    params = {
+        "q": query,
+        "language": "en",
+        "sortBy": "publishedAt",
+        "apiKey": config.NEWSAPI_KEY,
+        "pageSize": page_size,
+        "from": from_date
+    }
+
     try:
-        response = requests.get(url)
+        response = requests.get(base_url, params=params)
+        logging.info(f"NewsAPI URL: {response.url}")
         response.raise_for_status()
+
         data = response.json()
+
+        if data.get("status") != "ok":
+            logging.error(f"NewsAPI error: {data}")
+            return []
+
+        articles = data.get("articles", [])
+        if not articles:
+            logging.warning("No articles found for the query.")
+            return []
+
         documents = [
             Document(
-                page_content=f"{article['title']}\n\n{article['description']}",
+                page_content=f"{article.get('title', '')}\n\n{article.get('description', '')}",
                 metadata={
-                    "source": article['source']['name'],
-                    "publishedAt": article['publishedAt'],
-                    "url": article['url'],
+                    "source": article.get("source", {}).get("name", ""),
+                    "publishedAt": article.get("publishedAt", ""),
+                    "url": article.get("url", ""),
                     "type": "news"
                 }
             )
-            for article in data.get('articles', [])
+            for article in articles
         ]
         return documents
+
     except requests.RequestException as e:
         logging.error(f"Error fetching news: {e}")
         return []
