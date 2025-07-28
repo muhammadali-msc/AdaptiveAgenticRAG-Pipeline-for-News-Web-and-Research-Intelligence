@@ -50,10 +50,10 @@ jobs:
         run: docker compose -f docker-compose.yml build
 
       - name: Push backend image to ECR
-        run: docker push ${{ secrets.AWS_ECR_LOGIN_URI }}/${{ secrets.ECR_BACKEND_REPO }}:latest
+        run: docker push ${{ secrets.AWS_ECR_LOGIN_URI }}/my-backend:latest
 
       - name: Push frontend image to ECR
-        run: docker push ${{ secrets.AWS_ECR_LOGIN_URI }}/${{ secrets.ECR_FRONTEND_REPO }}:latest
+        run: docker push ${{ secrets.AWS_ECR_LOGIN_URI }}/my-frontend:latest
 
   deploy-to-ec2:
     name: Continuous Deployment to EC2
@@ -75,8 +75,8 @@ jobs:
 
       - name: Pull latest images
         run: |
-          docker pull ${{ secrets.AWS_ECR_LOGIN_URI }}/${{ secrets.ECR_BACKEND_REPO }}:latest
-          docker pull ${{ secrets.AWS_ECR_LOGIN_URI }}/${{ secrets.ECR_FRONTEND_REPO }}:latest
+          docker pull ${{ secrets.AWS_ECR_LOGIN_URI }}/my-backend:latest
+          docker pull ${{ secrets.AWS_ECR_LOGIN_URI }}/my-frontend:latest
 
       - name: Stop and remove existing containers
         run: |
@@ -86,12 +86,12 @@ jobs:
       - name: Run Backend Container
         run: |
           docker run -d --name backend-app -p 8000:8000 \
-          ${{ secrets.AWS_ECR_LOGIN_URI }}/${{ secrets.ECR_BACKEND_REPO }}:latest
+          ${{ secrets.AWS_ECR_LOGIN_URI }}/my-backend:latest
 
       - name: Run Frontend Container
         run: |
           docker run -d --name frontend-app -p 3000:3000 \
-          ${{ secrets.AWS_ECR_LOGIN_URI }}/${{ secrets.ECR_FRONTEND_REPO }}:latest
+          ${{ secrets.AWS_ECR_LOGIN_URI }}/my-frontend:latest
 
       - name: Clean up Docker System
         run: docker system prune -f
