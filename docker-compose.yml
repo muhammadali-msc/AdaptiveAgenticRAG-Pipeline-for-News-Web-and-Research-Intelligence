@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   backend:
-    image: ${{ secrets.AWS_ECR_LOGIN_URI }}/${{ secrets.ECR_BACKEND_REPO }}:latest
+    image: ${{ECR_URI}}/my-backend:latest
     build:
       context: .
       dockerfile: backend/Dockerfile
@@ -14,7 +14,7 @@ services:
       - my_network
 
   frontend:
-    image: ${{ secrets.AWS_ECR_LOGIN_URI }}/${{ secrets.ECR_FRONTEND_REPO }}:latest
+    image: ${{ECR_URI}}/my-frontend:latest
     build:
       context: ./frontend
       dockerfile: Dockerfile
