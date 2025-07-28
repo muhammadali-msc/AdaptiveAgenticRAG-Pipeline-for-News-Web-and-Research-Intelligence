@@ -1,0 +1,105 @@
+# General Python ignores (for backend)
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+.installed.cfg
+MANIFEST
+
+# Python virtual environments
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.venv/
+.env
+
+# Pip / Poetry / PDM
+pip-log.txt
+pip-delete-this-directory.txt
+poetry.lock
+pdm.lock
+.pdm.toml
+
+# Coverage / test / lint
+.coverage
+.coverage.*
+.tox/
+.nox/
+.cache/
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+.mypy_cache/
+.dmypy.json
+.pyre/
+.pytype/
+
+# Django / Flask / FastAPI
+*.log
+db.sqlite3
+db.sqlite3-journal
+instance/
+.webassets-cache
+
+# Jupyter & IPython
+.ipynb_checkpoints/
+profile_default/
+ipython_config.py
+
+# Frontend Node / React specific
+node_modules/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+.vite/
+dist/
+build/
+
+# React build cache (Vite / Next / Create React App etc.)
+frontend/.next/
+frontend/out/
+frontend/.cache/
+frontend/build/
+frontend/dist/
+frontend/node_modules/
+
+# Local tooling / IDE
+*.swp
+*.swo
+*.bak
+*.tmp
+.DS_Store
+Thumbs.db
+*.idea/
+*.vscode/
+*.log
+*.lock
+*.pid
+
+# Docker artifacts
+Dockerfile~
+docker-compose.override.yml
+docker-compose.debug.yml
+
+# Ignore git folders inside subdirectories
+frontend/.git
+backend/.git
