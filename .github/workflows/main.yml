@@ -45,7 +45,7 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v1
 
       - name: Build backend and frontend images using Docker Compose
-        run: docker-compose -f docker-compose.yml build
+        run: docker compose -f docker-compose.yml build
 
       - name: Push backend image to ECR
         run: docker push ${{ secrets.AWS_ECR_LOGIN_URI }}/${{ secrets.ECR_BACKEND_REPO }}:latest
