@@ -1,7 +1,13 @@
 import axios from 'axios';
 import { useAuth } from '../components/AuthContext';
 
-export const BASE_URL = 'http://localhost:8000';
+let BASE_URL = '';
+
+if (process.env.ENVIRONMENT === 'dev') {
+  BASE_URL = 'http://localhost:8000';
+} else if (process.env.ENVIRONMENT === 'main') {
+  BASE_URL = process.env.REACT_APP_BASE_URL;
+}
 
 export const getAPI = async (url, accessToken, tokenType) => {
   const options = {
