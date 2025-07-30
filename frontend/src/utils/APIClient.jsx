@@ -4,9 +4,9 @@ import { useAuth } from '../components/AuthContext';
 let BASE_URL = '';
 
 if (process.env.ENVIRONMENT === 'dev') {
-  BASE_URL = 'http://localhost:8000';
+  BASE_URL = process.env.DEV_BASE_URL;
 } else if (process.env.ENVIRONMENT === 'main') {
-  BASE_URL = process.env.REACT_APP_BASE_URL;
+  BASE_URL = process.env.PROD_BASE_URL;
 }
 
 export const getAPI = async (url, accessToken, tokenType) => {
