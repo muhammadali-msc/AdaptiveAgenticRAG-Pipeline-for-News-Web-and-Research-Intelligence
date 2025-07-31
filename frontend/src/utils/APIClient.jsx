@@ -4,9 +4,9 @@ import { useAuth } from '../components/AuthContext';
 let BASE_URL = '';
 
 if (__CONFIG__.ENVIRONMENT === 'dev') {
-  BASE_URL = __CONFIG__.DEV_BASE_URL;
+    BASE_URL = __CONFIG__.DEV_BASE_URL + ":3000"; 
   } else {
-    BASE_URL = __CONFIG__.PROD_BASE_URL;
+    BASE_URL = __CONFIG__.PROD_BASE_URL + ":3000"; 
   }
 
 export const getAPI = async (url, accessToken, tokenType) => {
