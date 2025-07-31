@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useAuth } from '../components/AuthContext';
 
-let BASE_URL = "https://18.232.154.115:8000";
+let BASE_URL = "http://18.232.154.115:8000";
 
 export const getAPI = async (url, accessToken, tokenType) => {
   const options = {
